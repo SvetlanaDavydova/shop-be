@@ -1,0 +1,3 @@
+/shop-info-service/node_modules/*
+build
+.serverless

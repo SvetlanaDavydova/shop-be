@@ -68,7 +68,7 @@ functions:
           method: get
           cors: true
   find:
-    handler: handler.find
+    handler: find.find
     events:
       - http:
           path: /products/{id}

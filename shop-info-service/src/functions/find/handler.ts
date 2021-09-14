@@ -1,9 +1,9 @@
 import 'source-map-support/register';
 import { middyfy } from '@libs/lambda';
-import { hello } from '@functions/hello/handler';
+import { getProductsList } from '@functions/hello/handler';
 
-const find = async (event) => {
-    const data = await hello();
+const getProductsById  = async (event) => {
+    const data = await getProductsList();
     let books = JSON.parse(data.body);
     console.log(books);
     let result = books.find((item) => item.id == event.pathParameters.id)
@@ -13,4 +13,4 @@ const find = async (event) => {
      
     }
 }
-export const mainFind = middyfy(find);
+export const mainFind = middyfy(getProductsById );

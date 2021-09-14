@@ -5,7 +5,7 @@ import { middyfy } from '@libs/lambda';
 import { data } from "./mock";
 // import schema from './schema';
 
-export const hello = async () => {
+export const getProductsList = async () => {
   return {
     statusCode: 200,
     body: JSON.stringify(data),
@@ -16,4 +16,4 @@ export const hello = async () => {
   }
 }
 
-export const main = middyfy(hello);
+export const main = middyfy(getProductsList);

@@ -1,11 +1,11 @@
 'use strict';
 
-const { data } = require("./mock");
+const { hello } = require("./handler");
 
 module.exports.find = async (event) => {
-    console.log('Event', event);
-   
-    let result = data.find((item) => item.id == event.pathParameters.id)
+    const data = await hello();
+    let books = JSON.parse(data.body);
+    let result = books.find((item) => item.id == event.pathParameters.id)
     return {
       statusCode: 200,
       body: JSON.stringify(result)    

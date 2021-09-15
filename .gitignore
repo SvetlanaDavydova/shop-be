@@ -1,3 +1,6 @@
 /shop-info-service/node_modules/*
 build
-.serverless
+/shop-info-service/.serverless/*
+
+jspm_packages
+.webpack

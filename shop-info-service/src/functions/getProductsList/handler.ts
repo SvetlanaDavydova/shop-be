@@ -1,7 +1,8 @@
 import 'source-map-support/register';
-import { getAllProducts } from 'src/helpers/getAllProducts';
+import { getAllProducts } from 'src/services/getAllProducts';
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import { NotFoundError } from 'src/helpers/errorsHandler';
+import { NotFoundError } from 'src/helpers/errorsModel';
+import { errorHandler } from 'src/helpers/errorsHandler';
 
 export const getProductsList: APIGatewayProxyHandler = async (event) => {
   console.log('getProductsList was called with: ', event);
@@ -12,7 +13,7 @@ export const getProductsList: APIGatewayProxyHandler = async (event) => {
 
     if(!data){
       console.log('went into NotFoundError');
-      throw new NotFoundError( 'List of products not found', 404 )
+      throw new NotFoundError();
     }
 
     return {
@@ -24,17 +25,8 @@ export const getProductsList: APIGatewayProxyHandler = async (event) => {
       }
     }
   } catch(err){
-    if(err instanceof NotFoundError){
-      return {
-        statusCode: err.statusCode,
-        body: err.message
-      }
-    } else {
-      return {
-        statusCode: 500,
-        body: 'Internal Server Error'         
-      }
-    }
+    const result = errorHandler(err);
+    return result;
   }
 }
 

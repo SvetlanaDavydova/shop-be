@@ -1,17 +1,17 @@
-// class NotFoundError {
-//     // message: string;
-//     // statusCode: number;
-//     constructor(message:string, statusCode:number){
-        
-//         this.message = message;
-//         this.statusCode = statusCode;
-//     }
-// }
+import { NotFoundError } from "./errorsModel"
 
-export class NotFoundError extends Error{
-    
-    constructor(message:string, public statusCode:number ){
-        super(message);
-        this.statusCode = statusCode;
-    }
+export const errorHandler = async (err) => {
+
+    if(err instanceof NotFoundError){
+        return {
+          statusCode: err.statusCode,
+          body: err.message
+        }
+      } else {
+        return {
+          statusCode: 500,
+          body: 'Internal Server Error'         
+        }
+      }
+      
 }

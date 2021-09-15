@@ -1,12 +1,20 @@
 import 'source-map-support/register';
+import { getAllProducts } from 'src/helpers/getAllProducts';
+import { APIGatewayProxyHandler } from 'aws-lambda';
+import { NotFoundError } from 'src/helpers/errorsHandler';
 
-// import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
-import { middyfy } from '@libs/lambda';
-import { data } from "./mock";
-// import schema from './schema';
+export const getProductsList: APIGatewayProxyHandler = async (event) => {
+  console.log('getProductsList was called with: ', event);
 
-export const getProductsList = async () => {
   try{
+    const data = await getAllProducts();
+    console.log('The result of calling helper getAllProducts is: ', data);
+
+    if(!data){
+      console.log('went into NotFoundError');
+      throw new NotFoundError( 'List of products not found', 404 )
+    }
+
     return {
       statusCode: 200,
       body: JSON.stringify(data),
@@ -16,11 +24,17 @@ export const getProductsList = async () => {
       }
     }
   } catch(err){
-    return {
-      statusCode: 404,
-      message: err.message           
+    if(err instanceof NotFoundError){
+      return {
+        statusCode: err.statusCode,
+        body: err.message
+      }
+    } else {
+      return {
+        statusCode: 500,
+        body: err.message         
+      }
     }
   }
 }
 
-export const main = middyfy(getProductsList);

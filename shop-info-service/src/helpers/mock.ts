@@ -1,4 +1,4 @@
-export const data: Object[] = [
+export const data = [
   {
     "count": 4,
     "description": "Short Book Description1",
@@ -19,5 +19,12 @@ export const data: Object[] = [
     "id": 3,
     "price": 10,
     "title": "Book 3"
-  }  
+  },
+  {
+    "count": 5,
+    "description": "Short Book Description4",
+    "id": 4,
+    "price": 15,
+    "title": "Book 4"
+  } 
 ]

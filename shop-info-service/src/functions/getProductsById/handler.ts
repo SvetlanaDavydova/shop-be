@@ -1,40 +1,37 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import 'source-map-support/register';
-import { middyfy } from '@libs/lambda';
-import { getProductsList } from '@functions/getProductsList/handler';
+import { NotFoundError } from 'src/helpers/errorsHandler';
+import { getProductById } from 'src/helpers/getProductById';
 
 export const getProductsById: APIGatewayProxyHandler = async (event) => {
-  console.log('getProductsById was called with:', event);
+  console.log('getProductsById was called with: ', event);
 
-  try {
-    const data = await getProductsList();
-
-    console.log(data);
-
-    const books = JSON.parse(data.body);
-
-    console.log(books);
-
-    const result = books.find((item) => item.id == event.pathParameters.id);
-    
-    console.log(result);
+  try {    
+    const result = await getProductById(event.pathParameters.id);
+    console.log('The result of calling helper getProductById is: ', result);
 
     if (!result) {
-      console.log('134')
-      throw new Error("Product not found")
+      console.log('went into NotFoundError');
+      throw new NotFoundError('Product not found', 404);
     }
 
     return {
       statusCode: 200,
       body: JSON.stringify(result)
     }
+
   } catch (err) {
-    console.log('222', err)
-    return {
-      statusCode: 404,
-      body: '',
-      // message: err.message
-    }
+    if(err instanceof NotFoundError){
+      return {
+        statusCode: err.statusCode,
+        body: err.message
+      }
+    } else {
+      return {
+        statusCode:500,
+        body: err.message
+      }
+    }        
   }
 }
-// export const mainFind = middyfy(getProductsById);
+

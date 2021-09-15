@@ -27,6 +27,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/ProductsList"
+        "404":
+          description: "List of products not found"
+        "500":
+          description: "Internal Server Error"
   /products/{id}:
     get:  
       tags:
@@ -49,6 +53,8 @@ paths:
             $ref: "#/definitions/Product"
         "404":
           description: "Product not found"
+        "500":
+          description: "Internal Server Error"
 definitions:
   Product:
     type: "object"

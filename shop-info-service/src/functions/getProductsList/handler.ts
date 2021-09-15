@@ -32,7 +32,7 @@ export const getProductsList: APIGatewayProxyHandler = async (event) => {
     } else {
       return {
         statusCode: 500,
-        body: err.message         
+        body: 'Internal Server Error'         
       }
     }
   }

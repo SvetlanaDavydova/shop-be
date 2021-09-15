@@ -1,2 +1,2 @@
-export { default as hello } from './hello';
-export { default as find } from './find';
+export { default as hello } from './getProductsList';
+export { default as find } from './getProductsById';

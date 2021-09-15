@@ -6,12 +6,19 @@ import { data } from "./mock";
 // import schema from './schema';
 
 export const getProductsList = async () => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json',
-      "Access-Control-Allow-Origin" : "*"
+  try{
+    return {
+      statusCode: 200,
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin" : "*"
+      }
+    }
+  } catch(err){
+    return {
+      statusCode: 404,
+      message: err.message           
     }
   }
 }

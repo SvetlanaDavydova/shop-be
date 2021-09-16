@@ -1,19 +1,18 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import 'source-map-support/register';
 import { errorHandler } from 'src/helpers/errorsHandler';
 import { NotFoundError } from 'src/helpers/errorsModel';
+import { logger } from 'src/helpers/logger';
 import { getProductById } from 'src/services/getProductById';
 
 export const getProductsById: APIGatewayProxyHandler = async (event) => {
-  console.log('getProductsById was called with: ', event);
+  logger.info('getProductsById was called with: ', {event});
 
   try {    
     const result = await getProductById(event.pathParameters.id);
-    console.log('The result of calling helper getProductById is: ', result);
+    logger.info('The result of calling helper getProductById is: ', {result});
 
     if (!result) {
-      console.log('went into NotFoundError');
-      throw new NotFoundError();
+      throw new NotFoundError('Product not found');
     }
 
     return {

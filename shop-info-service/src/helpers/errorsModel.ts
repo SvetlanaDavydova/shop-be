@@ -11,7 +11,7 @@ class CustomError extends Error implements ErrorFields{
 }
 
 export class NotFoundError extends CustomError{
-    constructor(){
-        super('Product not found', 404);
+    constructor(message:string){
+        super(message, 404);
     }
 }

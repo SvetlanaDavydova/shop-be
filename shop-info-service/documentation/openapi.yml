@@ -28,7 +28,7 @@ paths:
           schema:
             $ref: "#/definitions/ProductsList"
         "404":
-          description: "List of products not found"
+          description: "Product list not found"
         "500":
           description: "Internal Server Error"
   /products/{id}:

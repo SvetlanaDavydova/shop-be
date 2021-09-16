@@ -1,0 +1,35 @@
+
+service: shop-info-service
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
+  stage: dev
+  region: eu-west-1
+
+plugins:
+  - serverless-webpack
+
+custom:
+  webpack:
+    webpackConfig: './webpack.config.js'
+    includeModules: true
+
+functions:
+  getProductsById:
+    handler: ./src/functions/getProductsById/handler.getProductsById
+    events:
+      - http:
+          path: /products/{id}
+          method: get
+          cors: true
+  getProductsList:
+    handler: ./src/functions/getProductsList/handler.getProductsList
+    events:
+      - http:
+          path: products
+          method: get
+          cors: true

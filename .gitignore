@@ -3,4 +3,4 @@ build
 /shop-info-service/.serverless/*
 
 jspm_packages
-.webpack
+/shop-info-service/.webpack/*
